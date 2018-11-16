@@ -1,0 +1,76 @@
+body
+{
+    margin: 0;
+    padding: 0;
+    background-image: url(../images/Science_Building_Blue.jpg);
+}
+
+.text
+{
+    font-family: acumin-pro-bold, sans-serif;
+}
+
+.login-box
+{
+    width: 50%;
+    margin: 45px auto;
+    background-color: #003466;
+    border-radius: 4px;
+    align-content: center;
+    padding-bottom: 35px;
+}
+
+.login-content
+{
+    margin-top: 10px;
+    align-content: center;
+    text-align: center;
+}
+
+#nau-logo
+{
+    max-width: 500px;
+    vertical-align: center;
+    align-content: center;
+    margin-top: 25px;
+}
+
+#title
+{
+    font-size: 48px;
+    margin-top: 20px;
+}
+
+#main-word
+{
+    color: #009ddc;
+}
+
+#prefix
+{
+    color: #eab22b;
+    margin-right: 0 auto;
+    padding-right: 0 auto;
+}
+
+#sign-in
+{
+    margin-top: 30px;
+    border-width: 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 16px;
+    padding-right: 16px;
+    background-color: #eab22b;
+    border-color: #eab22b;
+    color: #003466;
+    font-weight: 900;
+    border-radius: 4px;
+    min-width: 235px;
+}
+
+#sign-in:hover
+{
+    background-color: #ffffff;
+    border-color: #eab22b;
+}

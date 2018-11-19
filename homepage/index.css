@@ -1,8 +1,22 @@
+html
+{
+    height: auto;
+    margin: 0;
+}
+
 body
 {
     margin: 0;
     padding: 0;
+    padding-top: 1px;
+    border: 1px solid transparent;
     background-image: url(../images/Science_Building_Blue.jpg);
+    background-repeat: no-repeat;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 .text
@@ -18,6 +32,7 @@ body
     border-radius: 4px;
     align-content: center;
     padding-bottom: 35px;
+    min-width: 550px;
 }
 
 .login-content
@@ -57,6 +72,7 @@ body
 {
     margin-top: 30px;
     border-width: 2px;
+    border: 2px;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 16px;
@@ -67,10 +83,36 @@ body
     font-weight: 900;
     border-radius: 4px;
     min-width: 235px;
+    cursor: pointer;
+    border-style: solid;
 }
 
 #sign-in:hover
 {
     background-color: #ffffff;
     border-color: #eab22b;
+    border-width: 2px;
+    border-radius: 4px;
+    border-style: solid;
 }
+
+a:link
+{
+    text-decoration: none;
+}
+
+a:visited
+{
+    text-decoration: none;
+}
+
+a:hover
+{
+    text-decoration: none;
+}
+
+a:active
+{
+    text-decoration: none;
+}
+

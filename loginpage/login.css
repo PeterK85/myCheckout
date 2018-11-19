@@ -1,0 +1,59 @@
+html
+{
+    height: 100%;
+    margin: 0;
+    overflow: auto;
+    overflow-y: scroll;
+}
+
+body
+{
+    margin: 0;
+    padding: 0;
+    border: 1px solid transparent;
+    background-image: url(../images/bg-peaks-1900-min.png), linear-gradient(to bottom, #0057ab 0%, #0057ab 40%, #00274d 60%, #00274d 100%);
+    background-repeat: no-repeat;
+    height: 85%;
+    background-position: 40% center;
+    background-size: 2560px;
+    display: block;
+    overflow: auto;
+
+}
+
+#content
+{
+    align-content: center;
+    text-align: center;
+    height: 100%;
+}
+
+.parent
+{
+    overflow: auto;
+}
+
+.login-form-div
+{
+    align-content: center;
+    text-align: center;
+    height: 100%;
+    width: 275px;
+}
+
+.logo-img
+{
+    margin-top: 60px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.text-form
+{
+    font-family: acumin-pro-bold, sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: white;
+    line-height: 16px;
+    text-align: left;
+}

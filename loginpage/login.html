@@ -10,11 +10,16 @@
     </head>
     <body>
         <div id="content">
-            <a href="http://www.nau.edu" class="logo-img" title="N A U Home Page"><img src="../images/Logo-3lines-Yellow+White-Transparent.svg"/></a>
+            <a href="http://www.nau.edu" class="logo-img" title="N A U Home Page"><img src="../images/Logo-3lines-Yellow+White-Transparent.svg"/></a><br>
             <div class="login-form-div">
                 <form method="post" id="form">
-                    <label for="username" class="text-form">User ID</label>
-                    <input class="required" id="username" size="25" tabindex="0" type="text" autocomplete="off" spellcheck="false" aria-require="true" name="username" value>
+                    <label for="username" class="text-form">User ID</label><br>
+                    <input class="required input" id="username" size="25" tabindex="0" type="text" autocomplete="off" spellcheck="false" aria-require="true" name="username" value />
+                    <br/><br/>
+                    <label for="password" class="text-form">Password</label>
+                    <input class="required input" id="password" size="25" tabindex="0" type="password" autocomplete="off" spellcheck="false" aria-require="true" name="password" value />
+                    <br/><br/>
+                    <input class="btn btn-submit" name="submit" value="SIGN IN" tabindex="0" type="button" onclick="checkInput()">
                 </form>
             </div>
         </div>

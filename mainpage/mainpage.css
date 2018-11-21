@@ -1,0 +1,13 @@
+html
+{
+    height: 100%;
+    margin: 0;
+}
+
+body
+{
+    margin: 0;
+    padding: 0;
+    border: 1px solid transparent;
+    background-image: linear-gradient(to bottom, #0057ab 0%, #0057ab 40%, #00274d 60%, #00274d 100%);)
+}

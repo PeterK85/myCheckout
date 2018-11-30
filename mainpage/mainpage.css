@@ -71,6 +71,8 @@ span
     color: #003466;
     font-weight: bold;
     font-size: 15px;
+    margin-right: 2px;
+    margin-left: 2px;
 }
 
 span:hover
@@ -96,7 +98,7 @@ table
 
 td, th 
 {
-    border: 1px solid #dddddd;
+    border: 1px solid #d6d6c2;
     text-align: left;
     padding: 8px;
 }
@@ -108,5 +110,5 @@ tr:nth-child(even)
 
 tr:nth-child(1)
 {
-    background-color: #ffffff;
+    background-color: #d6d6c2;
 }

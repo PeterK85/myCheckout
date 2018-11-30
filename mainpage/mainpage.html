@@ -10,10 +10,20 @@
     </head>
     <body>
         <div id="main-area">
-            <div></div>
+            <div id="pop-up-container" class="pop-up">
+                <div class="pop-up-content">
+                    <span class="close" onclick="closePopUp()">&times;</span>
+                    <p>Add Table</p>
+                    <form>
+                        Name of Table:<input type="text" name="name-table" id="name-table"/><br/>
+                        Number of items:<input type="text" name="num-items" id="num-items"/>
+                        <input id="add-button" type="button" name="add-button" value="Add table"/ onclick="addTable()">
+                    </form>
+                </div>
+            </div>
             <div id="buttons">
-                <div class="inline" id="left-buttons"><span>REMOVE</span></div>
-                <div class="inline" id="right-buttons"><span>ADD TABLE</span></div><br/>
+                <div class="inline" id="left-buttons"><span class="btn" onclick="remove()">REMOVE</span></div>
+                <div class="inline" id="right-buttons"><span class="btn" id="add-table-btn" onclick="showPopUp()">ADD TABLE</span></div><br/>
             </div>
             <dir id="table-area">
                 <table>

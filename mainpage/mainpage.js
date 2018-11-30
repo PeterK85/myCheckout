@@ -41,10 +41,28 @@ function createButtons()
 		}
 		document.getElementById("left-buttons").innerHTML += "<span class=\"btn\" onclick=\"selectTable("+index+")\">"+table_of_tables[index][0]+"</span>"; 
 	}
+	populateTableDiv();
+}
+
+function populateTableDiv()
+{
+	if( num_of_tables == 0 ){ return; }
+	var table = document.createElement("table");
+	table.innerHTML = "<tr><th>Item ID</th><th>Student CASID</th><th>Due Date</th></tr>"
+	document.getElementById("table-area").appendChild( table );
+	//TODO: iterate over the table array and populate the table.
+	//the second element will be size of the table.
+	//each iteration will append three items to a new table row:
+	//the id of the number or index (start counter at 1 and condition will be <= size)
+	//the casid, and return date
+	//if casid and return date are empty then just add the " "
+	//I don't think I will have to do any checking for this since " " will 
+	//be added to the innerHTML just fine.
 }
 
 function remove()
 {
+	if( num_of_tables == 0 ){ return; }
 	var index_to_remove;
 	for(var index = 0; index < num_of_tables; index++ )
 	{
@@ -54,8 +72,9 @@ function remove()
 			break;
 		}
 	}
-	table_of_tables.splice( index_to_remove, 1 );//TODO remove current table
+	table_of_tables.splice( index_to_remove, 1 );
 	num_of_tables--;
+	if( num_of_tables == 0 ){ createButtons(); return; }
 	current_table = table_of_tables[0][0];
 	createButtons();
 }
@@ -68,7 +87,8 @@ function selectTable( index )
 
 function addTable()
 {
-	if( num_of_tables == MAX_NUM_TABLES ){ return; }
+	if( num_of_tables == MAX_NUM_TABLES )
+	{ alert("You may only have 4 tables at this time."); closePopUp(); return; }
 	var name = document.getElementById("name-table").value;
 	var num = document.getElementById("num-items").value;
 	console.log(name);

@@ -2,7 +2,7 @@
 	TODO: make the second index in the table array, the amount of items in the table.
 */
 var table_1 = [ 
-"Calculators",
+"Calculators", "6",
 "prk33", "Nov 7",
 "ber98", "Nov 6",
 " ", " ",
@@ -12,11 +12,17 @@ var table_1 = [
 ];
 
 var table_2 = [
-"Teeth"
+"Teeth", "5",
+"ber98", "Nov 18",
+" ", " ",
+" ", " ",
+" ", " ",
+" ", " "
 ];
 
 var table_3 = [
-"Keys"
+"Keys", "1",
+"prk33", "Dec 85"
 ];
 
 var MAX_NUM_TABLES = 4;
@@ -46,10 +52,15 @@ function createButtons()
 
 function populateTableDiv()
 {
-	if( num_of_tables == 0 ){ return; }
+	document.getElementById("table-area").innerHTML = "";
 	var table = document.createElement("table");
-	table.innerHTML = "<tr><th>Item ID</th><th>Student CASID</th><th>Due Date</th></tr>"
-	document.getElementById("table-area").appendChild( table );
+	if( num_of_tables == 0 )
+	{  
+		table.innerHTML = "<tr><th>No Tables</th><tr>";
+		document.getElementById("table-area").appendChild( table );
+		return; 
+	}
+	table.innerHTML = "<tr class=\"first\"><th>Item ID</th><th>Student CASID</th><th>Due Date</th></tr>"
 	//TODO: iterate over the table array and populate the table.
 	//the second element will be size of the table.
 	//each iteration will append three items to a new table row:
@@ -58,6 +69,21 @@ function populateTableDiv()
 	//if casid and return date are empty then just add the " "
 	//I don't think I will have to do any checking for this since " " will 
 	//be added to the innerHTML just fine.
+	var index_to_display;
+	for(var index = 0; index < num_of_tables; index++ )
+	{
+		if( table_of_tables[index][0] == current_table )
+		{
+			index_to_display = index;
+			break;
+		}
+	}
+	var temp_size = parseInt(table_of_tables[index_to_display][1]) + 2;
+	for( var index = 2; index <= temp_size; index++ )
+	{
+		table.innerHTML += "<tr><td>"+(index - 1)+"</td><td>"+table_of_tables[index_to_display][index]+"</td><td>"+table_of_tables[index_to_display][index+1]+"</td></tr>";		
+	}
+	document.getElementById("table-area").appendChild( table );
 }
 
 function remove()

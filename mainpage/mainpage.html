@@ -13,11 +13,11 @@
             <div id="pop-up-container" class="pop-up">
                 <div class="pop-up-content">
                     <span class="close" onclick="closePopUp()">&times;</span>
-                    <p>Add Table</p>
+                    <p class="pop-up-text">Add A New Table</p>
                     <form>
-                        Name of Table:<input type="text" name="name-table" id="name-table"/><br/>
-                        Number of items:<input type="text" name="num-items" id="num-items"/>
-                        <input id="add-button" type="button" name="add-button" value="Add table"/ onclick="addTable()">
+                        <p class="pop-up-text">Name of Table: </p><input type="text" name="name-table" id="name-table"/><br/><br/>
+                        <p class="pop-up-text">Number of Items: </p><input type="text" name="num-items" id="num-items"/><br/><br/>
+                        <input id="add-button" type="button" name="add-button" value="ADD TABLE" onclick="addTable()"/>
                     </form>
                 </div>
             </div>
@@ -25,8 +25,9 @@
                 <div class="inline" id="left-buttons"><span class="btn" onclick="remove()">REMOVE</span></div>
                 <div class="inline" id="right-buttons"><span class="btn" id="add-table-btn" onclick="showPopUp()">ADD TABLE</span></div><br/>
             </div>
-            <dir id="table-area">
-            </dir>
+            <!-- This is where the dynamically created tables go. -->
+            <div id="table-area">
+            </div>
         </div>
     </body>
 </html>

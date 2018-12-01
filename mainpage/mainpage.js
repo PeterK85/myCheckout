@@ -1,6 +1,29 @@
 /*
 	TODO: make the second index in the table array, the amount of items in the table.
 */
+
+class CheckoutTable
+{
+	constructor( name, size )
+	{
+		this.name = name;
+		this.size = size;
+		this.array = [];
+		for( var index = 0; index < size; index++ )
+		{
+			this.array.push( "" );
+		}
+	}
+
+	setIndex( index, item )
+	{
+		this.array[index] = item;
+	}
+}
+
+/* Hard coding in tables for MVP */
+/* First element would be name of table, and second the number of items in the table */
+/*
 var table_1 = [ 
 "Calculators", "6",
 "prk33", "Nov 7",
@@ -23,13 +46,21 @@ var table_2 = [
 var table_3 = [
 "Keys", "1",
 "prk33", "Dec 85"
-];
+];*/
+
+var table_1 = new CheckoutTable( "Calculators", 12 );
+table_1.setIndex(0,"prk33");
+table_1.setIndex(1,"dec 45");
+table_1.setIndex(4,"bob");
+table_1.setIndex(5,"may 85");
+var table_2 = new CheckoutTable( "Teeth", 10);
+var table_3 = new CheckoutTable( "Keys", 2 );
 
 var MAX_NUM_TABLES = 4;
 
 var table_of_tables = [ table_1, table_2, table_3 ];
 var num_of_tables = table_of_tables.length;
-var current_table = table_of_tables[0][0];
+var current_table = table_of_tables[0];
 
 document.addEventListener('DOMContentLoaded', function() {
     createButtons();
@@ -38,28 +69,35 @@ document.addEventListener('DOMContentLoaded', function() {
 function createButtons()
 {
 	document.getElementById("left-buttons").innerHTML = "<span class=\"btn\" onclick=\"remove()\">REMOVE</span>";
+	if( num_of_tables == 0 )
+	{ populateEmptyTableDiv(); return; }
 	for( var index = 0; index < num_of_tables; index++ )
 	{
-		if( current_table == table_of_tables[index][0] )
+		if( current_table == table_of_tables[index] )
 		{
-			document.getElementById("left-buttons").innerHTML += "<span class=\"btn\" id=\"current-table\">"+table_of_tables[index][0]+"</span>";
+			document.getElementById("left-buttons").innerHTML += "<span class=\"btn\" id=\"current-table\">"+table_of_tables[index].name+"</span>";
 			continue;
 		}
-		document.getElementById("left-buttons").innerHTML += "<span class=\"btn\" onclick=\"selectTable("+index+")\">"+table_of_tables[index][0]+"</span>"; 
+		document.getElementById("left-buttons").innerHTML += "<span class=\"btn\" onclick=\"selectTable("+index+")\">"+table_of_tables[index].name+"</span>"; 
 	}
 	populateTableDiv();
+}
+
+/* Displays the message that there is no tables. */
+function populateEmptyTableDiv()
+{
+	document.getElementById("table-area").innerHTML = "";
+	var table = document.createElement("table");
+	table.innerHTML = "<tr><th>No Tables</th><tr>";
+	document.getElementById("table-area").appendChild( table );
+	return; 
 }
 
 function populateTableDiv()
 {
 	document.getElementById("table-area").innerHTML = "";
 	var table = document.createElement("table");
-	if( num_of_tables == 0 )
-	{  
-		table.innerHTML = "<tr><th>No Tables</th><tr>";
-		document.getElementById("table-area").appendChild( table );
-		return; 
-	}
+	
 	table.innerHTML = "<tr class=\"first\"><th>Item ID</th><th>Student CASID</th><th>Due Date</th></tr>"
 	//TODO: iterate over the table array and populate the table.
 	//the second element will be size of the table.
@@ -69,30 +107,28 @@ function populateTableDiv()
 	//if casid and return date are empty then just add the " "
 	//I don't think I will have to do any checking for this since " " will 
 	//be added to the innerHTML just fine.
-	var index_to_display;
-	for(var index = 0; index < num_of_tables; index++ )
+	for( var index = 0, id_num = 1; index < current_table.size; index++, id_num++ )
 	{
-		if( table_of_tables[index][0] == current_table )
-		{
-			index_to_display = index;
-			break;
-		}
-	}
-	var temp_size = parseInt(table_of_tables[index_to_display][1]) + 2;
-	for( var index = 2; index <= temp_size; index++ )
-	{
-		table.innerHTML += "<tr><td>"+(index - 1)+"</td><td>"+table_of_tables[index_to_display][index]+"</td><td>"+table_of_tables[index_to_display][index+1]+"</td></tr>";		
+		table.innerHTML += "<tr><td>"+id_num+"</td><td class=\"casID\" contenteditable onfocus=\"editTable()\">"+current_table.array[index]+"</td><td>"+current_table.array[++index]+"</td></tr>";		
 	}
 	document.getElementById("table-area").appendChild( table );
 }
 
+function editTable()
+{
+	console.log("focused");
+}
+
+/* Removes current table after confirming with the user. Sets the new current table to the first on in the list. */
 function remove()
 {
+	var validation = confirm("Are you sure you want to delete the " + current_table.name + " table?");
+	if( !validation ){ return; }
 	if( num_of_tables == 0 ){ return; }
 	var index_to_remove;
 	for(var index = 0; index < num_of_tables; index++ )
 	{
-		if( table_of_tables[index][0] == current_table )
+		if( table_of_tables[index] == current_table )
 		{
 			index_to_remove = index;
 			break;
@@ -101,13 +137,13 @@ function remove()
 	table_of_tables.splice( index_to_remove, 1 );
 	num_of_tables--;
 	if( num_of_tables == 0 ){ createButtons(); return; }
-	current_table = table_of_tables[0][0];
+	current_table = table_of_tables[0];
 	createButtons();
 }
 
 function selectTable( index )
 {
-	current_table = table_of_tables[index][0];
+	current_table = table_of_tables[index];
 	createButtons();
 }
 
@@ -116,18 +152,16 @@ function addTable()
 	if( num_of_tables == MAX_NUM_TABLES )
 	{ alert("You may only have 4 tables at this time."); closePopUp(); return; }
 	var name = document.getElementById("name-table").value;
-	var num = document.getElementById("num-items").value;
-	console.log(name);
-	console.log(num);
-	var new_array = [];
-	new_array.push( name );
-	new_array.push( num );
-	for( var index = 3; index < num; index++ )
+	var num = parseInt(document.getElementById("num-items").value);
+	if( ( typeof name ) != "string" || ( typeof num ) != "number" || num <= 0 || isNaN(num)  )
 	{
-		new_array.push( " " );
+		alert("Please enter a name and/or the number of items you want.");
+		return;
 	}
-	table_of_tables.push( new_array );
+	/* MUST MULTIPLY NUM BY 2 TO GET CORRECT SIZE BECAUSE JAVASCRIPT IS STUPID. */
+	table_of_tables.push( new CheckoutTable( name, num * 2 ) );
 	num_of_tables++;
+	current_table = table_of_tables[ table_of_tables.length - 1 ];
 	createButtons();
 	closePopUp();
 }
@@ -136,15 +170,14 @@ function addTable()
 /*
 	Pop-up Menu Functionality
 */
-var pop_up = document.getElementById("pop-up-container");
-var add_btn_page = document.getElementById("add-table-btn");
-var close_btn = document.getElementsByClassName("close")[0];
 
+/* Sets the pop up div visible. */
 function showPopUp()
 {
 	document.getElementById("pop-up-container").style.display = "block";
 }
 
+/* Makes the pop invisible and remove any values entered into input fields. */
 function closePopUp()
 {
 	document.getElementById("pop-up-container").style.display = "none";
@@ -152,13 +185,12 @@ function closePopUp()
 	document.getElementById("num-items").value = "";
 }
 
+/* Close the window when the user clicks outside of the pop up area */
 window.onclick = function(event)
 {
     if( event.target == document.getElementById("pop-up-container") )
     {
-        document.getElementById("pop-up-container").style.display = "none";
-        document.getElementById("name-table").value = "";
-		document.getElementById("num-items").value = "";
+        closePopUp();
     }
 }
 

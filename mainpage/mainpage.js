@@ -1,6 +1,9 @@
 /*
-	TODO: make the second index in the table array, the amount of items in the table.
+	File: mainpage.js
+
+	Description: This file is used for the logic side of the CS386 Project. It allows the user to create, edit, and manage tables of items.
 */
+
 
 class CheckoutTable
 {
@@ -99,24 +102,57 @@ function populateTableDiv()
 	var table = document.createElement("table");
 	
 	table.innerHTML = "<tr class=\"first\"><th>Item ID</th><th>Student CASID</th><th>Due Date</th></tr>"
-	//TODO: iterate over the table array and populate the table.
-	//the second element will be size of the table.
-	//each iteration will append three items to a new table row:
-	//the id of the number or index (start counter at 1 and condition will be <= size)
-	//the casid, and return date
-	//if casid and return date are empty then just add the " "
-	//I don't think I will have to do any checking for this since " " will 
-	//be added to the innerHTML just fine.
 	for( var index = 0, id_num = 1; index < current_table.size; index++, id_num++ )
 	{
-		table.innerHTML += "<tr><td>"+id_num+"</td><td class=\"casID\" contenteditable onfocus=\"editTable()\">"+current_table.array[index]+"</td><td>"+current_table.array[++index]+"</td></tr>";		
+		table.innerHTML += "<tr><td>"+id_num+"</td><td class=\"casID\" contenteditable id=\""+index+"\" onfocusout=\"editTable("+index+")\">"+current_table.array[index]+"</td><td>"+current_table.array[++index]+"</td></tr>";		
 	}
 	document.getElementById("table-area").appendChild( table );
 }
 
-function editTable()
+function editTable( index )
 {
-	console.log("focused");
+	var regex = /^[a-z]{3}\d{1,5}$/;
+	var user_input = document.getElementById(index).innerHTML;
+	if( regex.test( user_input ) || user_input == "" )
+	{
+		current_table.setIndex( index, user_input );
+		var date = getDueDate();
+		current_table.setIndex( index + 1, date );
+		populateTableDiv();
+		return;
+	}
+	alert("Please enter a valid CASID");
+	document.getElementById(index).innerHTML = current_table.array[index];
+}
+
+function getDueDate()
+{
+	var date = new Date();
+	var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+	var months_thirty = [ 3, 5, 8, 10 ];
+	var months_thirty_one = [ 0, 2, 4, 6, 7, 9, 11 ];
+	var temp_month = date.getMonth();
+	var current_day = date.getDate();
+	var temp_date =  current_day + 14;
+	if( temp_date > 28 && temp_month == 1 )
+	{
+		temp_month = 2;
+		temp_date -= 31;
+	}
+	else if( temp_date > 30 && months_thirty.includes( temp_month ) )
+	{
+		temp_month++;
+		current_day -= 30;
+	}
+	else if( temp_date > 31 && months_thirty_one.includes( temp_month ) )
+	{
+		temp_month++;
+		current_day -= 31;
+	}
+
+	if( temp_month == 12 ){ temp_month = 0; }
+
+	return months[temp_month] + " " + temp_date;
 }
 
 /* Removes current table after confirming with the user. Sets the new current table to the first on in the list. */

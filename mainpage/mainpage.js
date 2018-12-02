@@ -113,7 +113,7 @@ function editTable( index )
 {
 	var regex = /^[a-z]{3}\d{1,5}$/;
 	var user_input = document.getElementById(index).innerHTML;
-	if( regex.test( user_input ) || user_input == "" )
+	if( regex.test( user_input ) )
 	{
 		current_table.setIndex( index, user_input );
 		var date = getDueDate();
@@ -121,6 +121,7 @@ function editTable( index )
 		populateTableDiv();
 		return;
 	}
+	if( user_input == "" ){ current_table.setIndex( index + 1, "" ); populateTableDiv(); return; }
 	alert("Please enter a valid CASID");
 	document.getElementById(index).innerHTML = current_table.array[index];
 }

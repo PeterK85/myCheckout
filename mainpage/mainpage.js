@@ -2,9 +2,17 @@
 	File: mainpage.js
 
 	Description: This file is used for the logic side of the CS386 Project. It allows the user to create, edit, and manage tables of items.
+	
+	Author: Peter Kurtz
 */
 
-
+/*
+	Class for a checkout table that holds a name, the size and an array. The array will always be an even size.
+	The array can be thought of as groups of two, the first part a CASID, and the second part the due date for the particular student.
+	Since JavaScript is "special" you don't have declared variables you set class variables in the constructor by setting a variable with 
+	the prefix "this.". So "this.name" creates a variable for the class called "name." And in this class there is an array. Arrays inside 
+	of classes need to have a function to assign values to different indicies.
+*/
 class CheckoutTable
 {
 	constructor( name, size )
@@ -25,50 +33,46 @@ class CheckoutTable
 }
 
 /* Hard coding in tables for MVP */
-/* First element would be name of table, and second the number of items in the table */
-/*
-var table_1 = [ 
-"Calculators", "6",
-"prk33", "Nov 7",
-"ber98", "Nov 6",
-" ", " ",
-" ", " ",
-"ksj46", "Nov 16",
-" ", " "				
-];
-
-var table_2 = [
-"Teeth", "5",
-"ber98", "Nov 18",
-" ", " ",
-" ", " ",
-" ", " ",
-" ", " "
-];
-
-var table_3 = [
-"Keys", "1",
-"prk33", "Dec 85"
-];*/
-
 var table_1 = new CheckoutTable( "Calculators", 12 );
 table_1.setIndex(0,"prk33");
-table_1.setIndex(1,"dec 45");
-table_1.setIndex(4,"bob");
-table_1.setIndex(5,"may 85");
+table_1.setIndex(1,"Dec 15");
+table_1.setIndex(4,"ber98");
+table_1.setIndex(5,"Dec 16");
+table_1.setIndex(6, "kst42");
+table_1.setIndex(7, "Dec 16");
+table_1.setIndex(10, "msd7");
+table_1.setIndex(11, "Dec 18");
 var table_2 = new CheckoutTable( "Teeth", 10);
-var table_3 = new CheckoutTable( "Keys", 2 );
+table_2.setIndex(2, "ksj46");
+table_2.setIndex(3, "Dec 18");
+table_2.setIndex(4, "mba75");
+table_2.setIndex(5, "Dec 18");
+var table_3 = new CheckoutTable( "Keys", 20 );
+table_3.setIndex(0, "sap353");
+table_3.setIndex(1, "Dec 18");
+table_3.setIndex(2, "ber98");
+table_3.setIndex(3, "Dec 18");
+table_3.setIndex(4, "prk33");
+table_3.setIndex(5, "Dec 18");
+table_3.setIndex(6, "mba75");
+table_3.setIndex(7, "Dec 18");
+table_3.setIndex(8, "ksj46");
+table_3.setIndex(9, "Dec 18");
 
+/* The current max amount of tables is 4 becuase once more than a certain threshold is passed the styling looks weird. */
 var MAX_NUM_TABLES = 4;
 
+/* An array and information about checkout tables. */
 var table_of_tables = [ table_1, table_2, table_3 ];
 var num_of_tables = table_of_tables.length;
 var current_table = table_of_tables[0];
 
+/* Loads the tables the first time the page is loaded. */
 document.addEventListener('DOMContentLoaded', function() {
     createButtons();
 }, false);
 
+/* Creates the tabs on the top left for the different tables and the REMOVE button. And makes the user know which table is selected. */
 function createButtons()
 {
 	document.getElementById("left-buttons").innerHTML = "<span class=\"btn\" onclick=\"remove()\">REMOVE</span>";
@@ -96,6 +100,7 @@ function populateEmptyTableDiv()
 	return; 
 }
 
+/* Dynamically create HTML table elements to display the current table. */
 function populateTableDiv()
 {
 	document.getElementById("table-area").innerHTML = "";
@@ -109,6 +114,7 @@ function populateTableDiv()
 	document.getElementById("table-area").appendChild( table );
 }
 
+/* Checks if the user put in a valid CASID by checking against a regex. */
 function editTable( index )
 {
 	var regex = /^[a-z]{3}\d{1,5}$/;
@@ -126,6 +132,8 @@ function editTable( index )
 	document.getElementById(index).innerHTML = current_table.array[index];
 }
 
+/* Calculates the due date of the item, 2 weeks from the current date. */
+/* DOES NOT ACCOUNT FOR LEAP YEAR. */
 function getDueDate()
 {
 	var date = new Date();
@@ -138,7 +146,7 @@ function getDueDate()
 	if( temp_date > 28 && temp_month == 1 )
 	{
 		temp_month = 2;
-		temp_date -= 31;
+		temp_date -= 28;
 	}
 	else if( temp_date > 30 && months_thirty.includes( temp_month ) )
 	{
@@ -178,31 +186,42 @@ function remove()
 	createButtons();
 }
 
+/* Used for visiually showing the current table that the user selects. */
 function selectTable( index )
 {
 	current_table = table_of_tables[index];
 	createButtons();
 }
 
+/* Lets the user create new tables up to the max amout of tables, 4. */
 function addTable()
 {
 	if( num_of_tables == MAX_NUM_TABLES )
-	{ alert("You may only have 4 tables at this time."); closePopUp(); return; }
+	{ 
+		alert("You may only have 4 tables at this time."); 
+		closePopUp(); 
+		return; 
+	}
+
 	var name = document.getElementById("name-table").value;
 	var num = parseInt(document.getElementById("num-items").value);
+
+	/* Error handling to make sure the user puts in a name and a number. */
 	if( ( typeof name ) != "string" || ( typeof num ) != "number" || num <= 0 || isNaN(num)  )
 	{
 		alert("Please enter a name and/or the number of items you want.");
 		return;
 	}
+
 	/* MUST MULTIPLY NUM BY 2 TO GET CORRECT SIZE BECAUSE JAVASCRIPT IS STUPID. */
 	table_of_tables.push( new CheckoutTable( name, num * 2 ) );
 	num_of_tables++;
+
+	/* Set the current table to the new table that was just created. */
 	current_table = table_of_tables[ table_of_tables.length - 1 ];
 	createButtons();
 	closePopUp();
 }
-
 
 /*
 	Pop-up Menu Functionality
@@ -230,4 +249,3 @@ window.onclick = function(event)
         closePopUp();
     }
 }
-
